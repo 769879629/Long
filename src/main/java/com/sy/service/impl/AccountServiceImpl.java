@@ -1,5 +1,7 @@
 package com.sy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sy.mapper.AccountMapper;
 import com.sy.model.Account;
 import com.sy.service.AccountService;
@@ -19,13 +21,19 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper mapper;
 
     @Override
-    public List<Account> findlist() throws Exception {
-        return mapper.findlist();
+    public PageInfo findBymoneyIn(int pageNum, int pageSize,Integer id) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Account> bymoneyIn = mapper.findBymoneyIn(id);
+        PageInfo pageInfo =new PageInfo(bymoneyIn);
+        return pageInfo;
     }
 
     @Override
-    public List<Account> findlist1() throws Exception {
-        return mapper.findlist1();
+    public PageInfo findBymoneyOut(int pageNum, int pageSize) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Account> bymoneyOut = mapper.findBymoneyOut();
+        PageInfo pageInfo =new PageInfo(bymoneyOut);
+        return pageInfo;
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)

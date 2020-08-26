@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface AccountMapper {
 
-    @Select(value = "SELECT * FROM ACCOUNT_DETAIL where moneyOut=0")
-    List<Account> findlist( ) throws Exception;
+    @Select(value = "SELECT * FROM ACCOUNT_DETAIL  where moneyOut=0 and otherAccountId=(SELECT bankAccount FROM au_user where id = #{id})")
+    List<Account> findBymoneyIn(Integer id) throws Exception;
 
     @Select(value = "SELECT * FROM ACCOUNT_DETAIL where moneyIn=0")
-    List<Account> findlist1( ) throws Exception;
+    List<Account> findBymoneyOut( ) throws Exception;
 
     @Insert(value = "insert into ACCOUNT_DETAIL(accountId,accountDate,moneyIn,moneyOut,type,otherAccountId) values (#{accountId},now(),#{moneyIn},0,0,#{otherAccountId})")
     Integer insertone(Account account)throws Exception;

@@ -1,14 +1,15 @@
 package com.sy.service;
 
+import com.github.pagehelper.PageInfo;
 import com.sy.model.Account;
 
 import java.util.List;
 
 public interface AccountService {
 
-    List<Account> findlist( ) throws Exception;
+    PageInfo findBymoneyIn(int pageNum, int pageSize,Integer id) throws Exception;
 
-    List<Account> findlist1( ) throws Exception;
+    PageInfo findBymoneyOut(int pageNum, int pageSize) throws Exception;
 
     Integer insertone(Account account)throws Exception;
 

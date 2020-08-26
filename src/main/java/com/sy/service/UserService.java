@@ -1,6 +1,7 @@
 package com.sy.service;
 
 
+import com.github.pagehelper.PageInfo;
 import com.sy.model.Account;
 import com.sy.model.User;
 import org.apache.ibatis.annotations.Select;
@@ -25,13 +26,15 @@ public interface UserService {
 
     Integer addone(User user)throws Exception;
 
-    List<User> findlogin( ) throws Exception;
+    PageInfo findlogin(int pageNum, int pageSize) throws Exception;
 
-    List<User> findoffical( ) throws Exception;
+    PageInfo findoffical(int pageNum, int pageSize) throws Exception;
 
     Integer deleteone(Integer id)throws Exception;
 
-    List<User> findusername(String username) throws Exception;
+    PageInfo findusername(int pageNum, int pageSize,String username) throws Exception;
+
+    PageInfo findOfficialbyUn(int pageNum, int pageSize,String username) throws Exception;
 
     Integer updateisStart1(Integer id)throws Exception;
 
@@ -41,5 +44,12 @@ public interface UserService {
 
     Integer updatevip(User user)throws Exception;
 
+    PageInfo findOfficialbyRid(int pageNum, int pageSize,Integer referId) throws Exception;
+
+    PageInfo findOfficialbyRidAndUn(int pageNum, int pageSize,Integer referId,String username) throws Exception;
+
+    PageInfo findOfficialbyRid2(int pageNum, int pageSize,Integer referId) throws Exception;
+
+    PageInfo findOfficialbyRid2AndUn(int pageNum, int pageSize,Integer referId,String username) throws Exception;
 
 }

@@ -67,12 +67,27 @@ public class ShiroController {
         BaseResult baseResult = new BaseResult();
         User sessionUser = (User)session.getAttribute("sessionUser");
         if(sessionUser==null){
-            baseResult.setMsg("请登录");
+            baseResult.setMsg("用户未登录，请登录！");
             baseResult.setCode(BaseResult.CODE_FAILED);
         }else{
             baseResult.setMsg(BaseResult.MSG_SUCCESS);
             baseResult.setCode(BaseResult.CODE_SUCCESS);
             baseResult.setData(sessionUser);
+        }
+        return baseResult;
+    }
+
+    @RequestMapping("/logout.do")
+    public BaseResult logout(HttpSession session){
+        BaseResult baseResult = new BaseResult();
+        session.removeAttribute("sessionUser");
+        User sessionUser = (User)session.getAttribute("sessionUser");
+        if(sessionUser==null){
+            baseResult.setMsg("退出成功！");
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+        }else{
+            baseResult.setMsg(BaseResult.MSG_FAILED);
+            baseResult.setCode(BaseResult.CODE_FAILED);
         }
         return baseResult;
     }

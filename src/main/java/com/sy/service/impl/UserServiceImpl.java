@@ -20,7 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper mapper;
-
+    @Override
     public User findByUsername(String username) throws Exception{
         Example example = new Example(User.class);
         example.createCriteria().andCondition("username=", username);
@@ -63,9 +63,6 @@ public class UserServiceImpl implements UserService {
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
     @Override
     public Integer updateisStart(Integer id) throws Exception {
-
-
-
         return mapper.updateisStart(id);
     }
 
@@ -76,13 +73,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findlogin() throws Exception {
-        return mapper.findlogin();
+    public PageInfo findlogin(int pageNum, int pageSize) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findlogin();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Override
-    public List<User> findoffical() throws Exception {
-        return mapper.findoffical();
+    public PageInfo findoffical(int pageNum, int pageSize) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findoffical();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
@@ -92,8 +95,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findusername(String username) throws Exception {
-        return mapper.findusername(username);
+    public PageInfo findusername(int pageNum, int pageSize,String username) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findusername(username);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findOfficialbyUn(int pageNum, int pageSize, String username) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findOfficialbyUn(username);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
@@ -121,6 +135,38 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer updatevip(User user) throws Exception {
         return mapper.updatevip(user);
+    }
+
+    @Override
+    public PageInfo findOfficialbyRid(int pageNum, int pageSize, Integer referId) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findOfficialbyRid(referId);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findOfficialbyRidAndUn(int pageNum, int pageSize, Integer referId, String username) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findOfficialbyRidAndUn(referId, username);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findOfficialbyRid2(int pageNum, int pageSize, Integer referId) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findOfficialbyRid2(referId);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findOfficialbyRid2AndUn(int pageNum, int pageSize, Integer referId, String username) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = mapper.findOfficialbyRid2AndUn(referId, username);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
 }

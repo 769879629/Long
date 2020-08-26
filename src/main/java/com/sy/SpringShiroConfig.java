@@ -58,7 +58,7 @@ public class SpringShiroConfig {
         System.out.println( "shiro Filter....." );
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setLoginUrl("http://localhost:63342/sy-agent/login.html");
+        shiroFilterFactoryBean.setLoginUrl("http://localhost:63342/syagent-html/login.html");
         //拦截器.
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
 

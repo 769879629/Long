@@ -12,4 +12,6 @@ public interface UaccountMapper {
     List<Uaccount> findlist( ) throws Exception;
 
 
+
+
 }

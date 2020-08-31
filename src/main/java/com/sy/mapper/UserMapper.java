@@ -32,17 +32,20 @@ public interface UserMapper extends Mapper<User> {
     @Insert(value = "insert into au_user(username,`password`,`password2`,realName,sex,mobile,roleId,roleName,isStart,createTime,lastUpdateTime,lastLoginTime,referId) values (#{username},#{password},#{password2},#{realName},#{sex},#{mobile},2,'注册会员',0,now(),now(),now(),#{referId})")
     Integer addone(User user)throws Exception;
 
-    @Select(value = "SELECT * FROM au_user where roleName = '注册会员'")
-    List<User> findlogin( ) throws Exception;
+    @Select(value = "SELECT * FROM au_user where roleName = '注册会员' and referId = #{referId}")
+    List<User> findlogin(Integer referId) throws Exception;
 
-    @Select(value = "SELECT * FROM au_user where roleName != '注册会员' ")
-    List<User> findoffical( ) throws Exception;
+    @Select(value = "SELECT * FROM au_user where roleName != '注册会员' and referId = #{referId}")
+    List<User> findoffical(Integer referId) throws Exception;
 
     @Delete(value = "delete from au_user where id = #{id}")
     Integer deleteone(Integer id)throws Exception;
 
     @Select(value = "SELECT * FROM au_user where username like CONCAT('%',#{username},'%') and roleName = '注册会员'")
     List<User> findusername(String username) throws Exception;
+
+    @Select(value = "SELECT * FROM au_user where username = #{username}")
+    User findByUsername(String username) throws Exception;
 
     @Select(value = "SELECT * FROM au_user where username like CONCAT('%',#{username},'%') and roleId != 2")
     List<User> findOfficialbyUn(String username) throws Exception;
@@ -56,10 +59,10 @@ public interface UserMapper extends Mapper<User> {
     @Update(value = "update au_user set `password`='000000', `password2`='000000' where id=#{id}")
     Integer updatepassword1(Integer id)throws Exception;
 
-    @Update(value = "update au_user set roleId=#{roleId},roleName=#{roleName} where id=#{id}")
+    @Update(value = "update au_user set roleId=#{roleId},roleName=#{roleName},isStart=0 where id=#{id}")
     Integer updatevip(User user)throws Exception;
 
-    @Select(value = "SELECT * FROM au_user where referId=#{referId} and roleId>2")
+    @Select(value = "SELECT * FROM au_user where referId=#{referId} and roleId!=2")
     List<User> findOfficialbyRid(Integer referId) throws Exception;
 
     @Select(value = "SELECT * FROM au_user where referId=#{referId} and  username like CONCAT('%',#{username},'%') and roleId>2")

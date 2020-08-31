@@ -1,7 +1,10 @@
 package com.sy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sy.mapper.AfficheMapper;
 import com.sy.model.Affiche;
+import com.sy.model.User;
 import com.sy.service.AfficheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,11 @@ public class AfficheServiceImpl implements AfficheService {
     }
 
     @Override
-    public List<Affiche> selectAll() throws Exception {
-        return mapper.selectAll();
+    public PageInfo selectAll(int pageNum, int pageSize)  throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Affiche> list = mapper.selectAll();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Override

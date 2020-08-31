@@ -3,6 +3,7 @@ package com.sy.mapper;
 
 
 import com.sy.model.Order;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public interface OrderMapper {
     List<Order> findlist( ) throws Exception;
 
     @Select(value = "SELECT * FROM ORDER_GOODS where createBy like CONCAT('%',#{createBy},'%') ")
-    List<Order> findcreateBy(String createBy) throws Exception;
+    List<Order> findcreateBy(@Param("createBy")String createBy) throws Exception;
 
     @Select(value = "SELECT * FROM ORDER_GOODS where goodsName like CONCAT('%',#{goodsName},'%') ")
-    List<Order> findgoodsName(String goodsName) throws Exception;
+    List<Order> findgoodsName(@Param("goodsName")String goodsName) throws Exception;
 }

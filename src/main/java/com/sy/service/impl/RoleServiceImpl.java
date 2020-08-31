@@ -27,7 +27,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Integer save(Role role) throws Exception {
 
-        return mapper.insert(role);
+        return mapper.insertone(role);
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)

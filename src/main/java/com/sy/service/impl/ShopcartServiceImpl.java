@@ -20,8 +20,8 @@ public class ShopcartServiceImpl implements ShopcartService {
         return mapper.findlist(userId);
     }
 
-    @Override
-    public Integer insert(Shopcart shopcart,Integer id) throws Exception {
-        return mapper.insert(shopcart,id);
-    }
+//    @Override
+//    public Integer insert(Shopcart shopcart,Integer id) throws Exception {
+//        return mapper.insert(shopcart,id);
+//    }
 }

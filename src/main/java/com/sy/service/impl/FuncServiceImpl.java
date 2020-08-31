@@ -47,7 +47,7 @@ public class FuncServiceImpl implements FuncService {
 
     @Override
     public PageInfo findByPage() throws Exception {
-        PageHelper.startPage(1, 50);
+        PageHelper.startPage(1, 1000);
         Example example = new Example(Func.class);
         example.setOrderByClause("id asc");
         List<Func> funcs = mapper.selectByExample(example);
@@ -72,6 +72,7 @@ public class FuncServiceImpl implements FuncService {
     public Integer removeFuncByRoleId(Integer roleId) throws Exception {
         return mapper.deleteFuncByRoleId(roleId);
     }
+
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
     @Override
     public Integer saveFuncByRoleId(Integer roleId, Integer[] funcIds, String createdBy) throws Exception {

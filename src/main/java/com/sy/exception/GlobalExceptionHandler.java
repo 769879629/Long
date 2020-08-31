@@ -1,6 +1,7 @@
 package com.sy.exception;
 
 import com.sy.model.base.BaseResult;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,6 +22,11 @@ public class GlobalExceptionHandler {
 
         //2.响应JSON
         BaseResult baseResult = new BaseResult();
+        if(e instanceof UnauthorizedException){
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg("你没有权限，请联系管理员！");
+            return baseResult;
+        }
         baseResult.setCode(BaseResult.CODE_FAILED);
         baseResult.setMsg(BaseResult.MSG_FAILED);
         return baseResult;

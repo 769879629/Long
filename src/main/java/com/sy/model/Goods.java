@@ -25,9 +25,6 @@ public class Goods {
     private String note;
     private Integer num;
     private String unit;
-
-
-
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
     private Date createTime;

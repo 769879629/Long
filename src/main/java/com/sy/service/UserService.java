@@ -26,9 +26,9 @@ public interface UserService {
 
     Integer addone(User user)throws Exception;
 
-    PageInfo findlogin(int pageNum, int pageSize) throws Exception;
+    PageInfo findlogin(int pageNum, int pageSize,Integer referId) throws Exception;
 
-    PageInfo findoffical(int pageNum, int pageSize) throws Exception;
+    PageInfo findoffical(int pageNum, int pageSize,Integer referId) throws Exception;
 
     Integer deleteone(Integer id)throws Exception;
 

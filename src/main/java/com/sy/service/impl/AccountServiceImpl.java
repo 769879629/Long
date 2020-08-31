@@ -29,9 +29,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public PageInfo findBymoneyOut(int pageNum, int pageSize) throws Exception {
+    public PageInfo findBymoneyOut(int pageNum, int pageSize,Integer id) throws Exception {
         PageHelper.startPage(pageNum, pageSize);
-        List<Account> bymoneyOut = mapper.findBymoneyOut();
+        List<Account> bymoneyOut = mapper.findBymoneyOut(id);
         PageInfo pageInfo =new PageInfo(bymoneyOut);
         return pageInfo;
     }
@@ -49,7 +49,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account findbalance() throws Exception {
-        return mapper.findbalance();
+    public Account findbalance(Integer accountId) throws Exception {
+        return mapper.findbalance(accountId);
+    }
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    @Override
+    public Integer insertdout1(Account account) throws Exception {
+        return mapper.insertdout1(account);
     }
 }

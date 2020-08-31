@@ -1,5 +1,6 @@
 package com.sy.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.sy.model.Affiche;
 import com.sy.model.Func;
 import com.sy.model.base.BaseResult;
@@ -26,9 +27,21 @@ public class AfficheController {
 
     @RequiresPermissions("/aff/findAll.do")
     @RequestMapping("/findAll.do")
-    public List<Affiche> findAll()throws Exception{
-
-        return service.selectAll();
+    public BaseResult findAll(int page, int limit)throws Exception{
+        BaseResult baseResult = new BaseResult();
+        PageInfo pageInfo = service.selectAll(page, limit);
+        if (pageInfo!=null){
+            baseResult.setData(pageInfo);
+            baseResult.setMsg("查询成功");
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+            baseResult.setLimit(limit);
+            baseResult.setPage(page);
+            baseResult.setCount((int) pageInfo.getTotal());
+        }else {
+            baseResult.setMsg("查询失败");
+            baseResult.setCode(BaseResult.CODE_FAILED);
+        }
+        return baseResult;
     }
 
     @RequiresPermissions("/aff/findOne.do")
@@ -40,16 +53,33 @@ public class AfficheController {
 
     @RequiresPermissions("/aff/addOne.do")
     @RequestMapping("/addOne.do")
-    public Integer addOne(Affiche affiche)throws Exception{
+    public BaseResult addOne(Affiche affiche)throws Exception{
 
-        return service.insertone(affiche);
+        BaseResult baseResult = new BaseResult();
+        Integer insertone = service.insertone(affiche);
+        if (insertone>0) {
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+            baseResult.setMsg("添加成功");
+        }else {
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg("添加失败");
+        }
+        return baseResult;
     }
 
     @RequiresPermissions("/aff/remove.do")
     @RequestMapping("/remove.do")
-    public Integer remove(Integer id)throws Exception{
-
-        return service.deleteById(id);
+    public BaseResult remove(Integer id)throws Exception{
+        BaseResult baseResult = new BaseResult();
+        Integer i = service.deleteById(id);
+        if (i>0) {
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+            baseResult.setMsg("删除成功");
+        }else {
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg("删除失败");
+        }
+        return baseResult;
     }
 
 }

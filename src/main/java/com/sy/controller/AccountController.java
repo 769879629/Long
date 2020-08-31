@@ -40,9 +40,9 @@ public class AccountController {
 
     @RequiresPermissions("/acc/findBymoneyOut.do")
     @RequestMapping("/findBymoneyOut.do")
-    public BaseResult findBymoneyOut(int page,int limit)throws Exception{
+    public BaseResult findBymoneyOut(int page,int limit,Integer id)throws Exception{
         BaseResult baseResult= new BaseResult();
-        PageInfo bymoneyOut = service.findBymoneyOut(page, limit);
+        PageInfo bymoneyOut = service.findBymoneyOut(page, limit,id);
 
         if (bymoneyOut!=null){
             baseResult.setMsg("查询成功");
@@ -63,26 +63,46 @@ public class AccountController {
     @RequestMapping("/insertone.do")
     public BaseResult insertone(Account account) throws Exception {
         BaseResult baseResult = new BaseResult();
-        Integer i = service.insertone(account);
-        if (i>0){
-            baseResult.setCode(BaseResult.CODE_SUCCESS);
-            baseResult.setMsg("充值成功！");
-        }else {
-            baseResult.setCode(BaseResult.CODE_FAILED);
-            baseResult.setMsg("充值失败！");
-        }
+
+            Integer i = service.insertone(account);
+            if (i>0){
+                baseResult.setCode(BaseResult.CODE_SUCCESS);
+                baseResult.setMsg("充值成功！");
+            }else {
+                baseResult.setCode(BaseResult.CODE_FAILED);
+                baseResult.setMsg("充值失败！");
+            }
+
         return baseResult;
     }
 
     @RequiresPermissions("/acc/insertdout.do")
     @RequestMapping("/insertdout.do")
-    public Integer insertdout(Account account) throws Exception {
-        return service.insertdout(account);
+    public BaseResult insertdout(Account account) throws Exception {
+        BaseResult baseResult = new BaseResult();
+        Account findbalance = service.findbalance(account.getAccountId());
+        Double ye = findbalance.getMoneyIn() - findbalance.getMoneyOut();
+
+        if (ye>=account.getMoneyOut()){
+            Integer i = service.insertdout(account);
+            if (i>0){
+                baseResult.setCode(BaseResult.CODE_SUCCESS);
+                baseResult.setMsg("取现成功！");
+            }else {
+                baseResult.setCode(BaseResult.CODE_FAILED);
+                baseResult.setMsg("取现失败！");
+            }
+        }else {
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg("账户余额不足！");
+        }
+
+        return baseResult;
     }
 
     @RequiresPermissions("/acc/findbalance.do")
     @RequestMapping("/findbalance.do")
-    public Account findbalance() throws Exception {
-        return service.findbalance();
+    public Account findbalance(Integer accountId) throws Exception {
+        return service.findbalance(accountId);
     }
 }

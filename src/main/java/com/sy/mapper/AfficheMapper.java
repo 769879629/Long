@@ -18,7 +18,7 @@ public interface AfficheMapper {
     @Select("SELECT * FROM affiche  order by publishTime asc LIMIT 0,5")
     List<Affiche> selectFive() throws Exception;
 
-    @Select("SELECT * FROM affiche  order by publishTime asc ")
+    @Select("SELECT * FROM affiche")
     List<Affiche> selectAll() throws Exception;
 
     @Select("SELECT * FROM affiche where id=#{id}")

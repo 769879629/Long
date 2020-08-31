@@ -9,7 +9,7 @@ public interface ShopcartService {
     List<Shopcart> findlist(Integer userId) throws Exception;
 
 
-    Integer insert(Shopcart shopcart,Integer id)throws Exception;
+//    Integer insert(Shopcart shopcart,Integer id)throws Exception;
 
 
 }

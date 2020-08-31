@@ -1,5 +1,6 @@
 package com.sy.service;
 
+import com.github.pagehelper.PageInfo;
 import com.sy.model.Affiche;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface AfficheService {
 
     List<Affiche> selectFive() throws Exception;
 
-    List<Affiche> selectAll() throws Exception;
+    PageInfo selectAll(int pageNum, int pageSize) throws Exception;
 
     Affiche selectOne(Integer id) throws Exception;
 

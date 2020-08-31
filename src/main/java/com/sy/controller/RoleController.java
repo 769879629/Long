@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,5 +43,39 @@ public class RoleController {
         return service.findById(id);
 
     }
+    @RequiresPermissions("/role/add.do")
+    @RequestMapping("/add.do")
+    public BaseResult add(Role role) throws Exception{
+        BaseResult baseResult = new BaseResult();
+        Integer save = service.save(role);
+        if (save>0){
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+            baseResult.setMsg("插入成功");
+        }
+else {
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg(BaseResult.MSG_FAILED);
+        }
 
+        return baseResult;
+
+    }
+
+    @RequiresPermissions("/role/del.do")
+    @RequestMapping("/del.do")
+    public BaseResult del(int id) throws Exception{
+        BaseResult baseResult = new BaseResult();
+        Integer save = service.removeById(id);
+        if (save>0){
+            baseResult.setCode(BaseResult.CODE_SUCCESS);
+            baseResult.setMsg("删除成功");
+        }
+        else {
+            baseResult.setCode(BaseResult.CODE_FAILED);
+            baseResult.setMsg(BaseResult.MSG_FAILED);
+        }
+
+        return baseResult;
+
+    }
 }

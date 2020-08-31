@@ -73,17 +73,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo findlogin(int pageNum, int pageSize) throws Exception {
+    public PageInfo findlogin(int pageNum, int pageSize,Integer referId) throws Exception {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> list = mapper.findlogin();
+        List<User> list = mapper.findlogin(referId);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
     @Override
-    public PageInfo findoffical(int pageNum, int pageSize) throws Exception {
+    public PageInfo findoffical(int pageNum, int pageSize,Integer referId) throws Exception {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> list = mapper.findoffical();
+        List<User> list = mapper.findoffical(referId);
         PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }

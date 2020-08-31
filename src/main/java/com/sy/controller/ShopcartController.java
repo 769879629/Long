@@ -26,12 +26,12 @@ public class ShopcartController {
         return service.findlist(userId);
     }
 
-    @RequiresPermissions("/shop/add.do")
-    @RequestMapping("/add.do")
-    public Integer add(Shopcart shopcart,Integer id)throws Exception{
-
-
-        return service.insert(shopcart,id);
-    }
+//    @RequiresPermissions("/shop/add.do")
+//    @RequestMapping("/add.do")
+//    public Integer add(Shopcart shopcart,Integer id)throws Exception{
+//
+//
+//        return service.insert(shopcart,id);
+//    }
 
 }

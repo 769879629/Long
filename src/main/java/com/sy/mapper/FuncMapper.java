@@ -14,23 +14,29 @@ public interface FuncMapper extends Mapper<Func> {
 
     /**
      * 按roleId查询所有func
-     * @param id
+     *
+     * @param roleId
      * @return
      * @throws Exception
      */
-    @Select("SELECT * FROM au_function WHERE id IN (SELECT functionid FROM au_authority WHERE roleid = #{roleid}) order by id asc")
-    List<Func> selectByRoleId(Integer id) throws Exception;
+    @Select("SELECT * FROM au_function WHERE id IN (SELECT functionid FROM au_authority WHERE roleId = #{roleId}) order by id asc")
+    List<Func> selectByRoleId(@Param("roleId")Integer roleId) throws Exception;
 
+    @Select(" SELECT funcUrl FROM au_function WHERE id IN(SELECT functionid FROM au_authority WHERE roleId =(SELECT roleid FROM au_user WHERE username = #{username}))")
+    List<Func> selectByUsername(@Param("username")String username) throws Exception;
     /**
      * 根据角色删除权限
+     *
      * @param roleId
      * @return
      * @throws Exception
      */
     @Delete("delete from au_authority where roleId = #{roleId}")
-    Integer deleteFuncByRoleId(Integer roleId) throws Exception;
+    Integer deleteFuncByRoleId(@Param("roleId")Integer roleId) throws Exception;
+
     /**
      * 根所角色增加权限
+     *
      * @param roleId
      * @param funcId
      * @return
@@ -40,7 +46,7 @@ public interface FuncMapper extends Mapper<Func> {
             "values(#{roleId},#{funcId},#{creationTime},#{createdBy})")
     Integer insertFuncByRoleId(
             @Param("roleId") Integer roleId,
-            @Param("funcId")  Integer funcId,
+            @Param("funcId") Integer funcId,
             @Param("creationTime") Date creationTime,
-            @Param("createdBy")String createdBy) throws Exception;
+            @Param("createdBy") String createdBy) throws Exception;
 }

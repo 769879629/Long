@@ -1,8 +1,11 @@
 package com.sy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sy.mapper.GoodsMapper;
-import com.sy.model.Goods;
+import com.sy.model.User;
 import com.sy.service.GoodsService;
+import com.sy.model.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -19,8 +22,11 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper mapper;
 
     @Override
-    public List<Goods> findlist() throws Exception {
-        return mapper.findlist();
+    public PageInfo findlist(int pageNum, int pageSize) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Goods> list = mapper.findlist();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
@@ -37,7 +43,15 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> findgoodsName(String goodsName) throws Exception {
-        return mapper.findgoodsName(goodsName);
+    public PageInfo findgoodsName(int pageNum, int pageSize,String goodsName)  throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Goods> list = mapper.findgoodsName(goodsName);
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
+    public Goods findByID(Integer id) throws Exception {
+        return mapper.findByID(id);
     }
 }

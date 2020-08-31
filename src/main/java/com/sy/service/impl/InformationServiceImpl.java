@@ -1,5 +1,7 @@
 package com.sy.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sy.mapper.InformationMapper;
 import com.sy.model.Affiche;
 import com.sy.model.Information;
@@ -20,8 +22,11 @@ public class InformationServiceImpl implements InformationService {
     private InformationMapper mapper;
 
     @Override
-    public List<Information> findlist() throws Exception {
-        return mapper.findlist();
+    public PageInfo findlist(int pageNum, int pageSize) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Information> list = mapper.findlist();
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
     }
 
     @Override
